@@ -16,20 +16,24 @@ subjects.forEach(item => {
     });
 });
 
-// Optional: form submit
+// FORM SUBMIT
 document.getElementById("regForm").addEventListener("submit", function(e){
     e.preventDefault();
-      e.preventDefault();
 
     let selectedSubjects = [];
     let totalFee = 0;
+    let count = 1;
 
     subjects.forEach(sub => {
         if (sub.checked) {
 
-            // Get subject name from the label text
-            let subjectName = sub.parentElement.innerText.trim();
-            selectedSubjects.push(subjectName);
+            // Get ONLY the subject name without price
+            let fullText = sub.parentElement.innerText.trim();
+            let subjectName = fullText.split("(")[0].trim();
+
+            // Add numbering
+            selectedSubjects.push(count + ". " + subjectName);
+            count++;
 
             totalFee += parseInt(sub.value);
         }
@@ -44,8 +48,8 @@ document.getElementById("regForm").addEventListener("submit", function(e){
 
     let message =
         "Student Name: " + studentName + "\n\n" +
-        "Selected Subjects:\n- " + selectedSubjects.join("\n- ") + "\n\n" +
+        "Selected Subjects:\n" + selectedSubjects.join("\n") + "\n\n" +
         "Total Fee: ₹" + totalFee;
 
-    document.getElementById("result").innerText=message;
+    document.getElementById("result").innerText = message;
 });
